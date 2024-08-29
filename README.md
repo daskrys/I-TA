@@ -25,10 +25,11 @@ Reference used to define [Common Network Ports](https://opensource.com/article/1
 
 3. Only use the first 10 IP protocol numbers as well as IPv6 and UDP
 4. The program does not take input for the text file or otherwise. It can be changed before running the program at the top of ```main.py``` under the ```FILE_PATH``` variable to desired path
+5. Operating System: macOS, Linux
 
 Reference used for [Protocol Numbers](https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)
 
-### Running
+### Usage
 1. Clone
     ```bash
     git clone https://github.com/daskrys/I-TA
