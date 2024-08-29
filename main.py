@@ -2,8 +2,9 @@ import csv
 
 parsed_logs = []
 lookup_table = {}
-lookup_count = {}
-FILE_PATH = "logdata.txt"
+tags = {}
+
+FILE_PATH = "flowlogs.txt"
 
 IANA_PROTOCOLS = {
     "1": "ICMP",
@@ -56,20 +57,16 @@ def assign_tag(port, protocol):
     elif port in EMAIL_PORTS:
         return "email"
     elif port == 3389:
-        return "sv_P5"
+        return "sv_P4"
     elif (protocol == "UDP") or (protocol == "TCP"):
         if port in COMMON_PORTS:
             return "sv_P1"
         else:
             return "sv_P2"
-    elif port in COMMON_PORTS:
-        return "sv_P3"
     else:
-        return "sv_P4"
+        return "sv_P3"
 
 def export_to_csv():
-
-    tags = {}
 
     with open("logs.csv", 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
@@ -79,11 +76,6 @@ def export_to_csv():
         for temp in lookup_table:
             port, protocol = temp
             tag, count = lookup_table[temp]
-
-            if tag in tags:
-                tags[tag] += 1
-            else:
-                tags[tag] = 1
 
             csvwriter.writerow([port, protocol, tag])
 
@@ -101,6 +93,7 @@ def export_to_csv():
         
 
 if __name__ == "__main__":
+    
     read_data()
 
     for log in parsed_logs:
@@ -115,5 +108,10 @@ if __name__ == "__main__":
         else:
             temp, count = lookup_table[(dstport, protocol)]
             lookup_table[(dstport, protocol)] = tag, count + 1
+
+        if tag in tags:
+            tags[tag] += 1
+        else:
+            tags[tag] = 1
 
     export_to_csv()
